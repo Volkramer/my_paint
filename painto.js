@@ -57,7 +57,6 @@ window.onload=function(){
         ctx.beginPath();
         topLeftX = e.pageX - this.offsetLeft
         topLeftY = e.pageY - this.offsetTop
-        console.log(topLeftX, topLeftY);
         mclick = 2;
       }
       else {
@@ -71,4 +70,27 @@ window.onload=function(){
     });
   });
 
+  $("#circle").on('click', function(){
+    canvas.off();
+    var mclick = 1;
+    var centerX;
+    var centerY;
+    var radius;
+    canvas.on('click', function(e){
+      if (mclick === 1) {
+        ctx.beginPath();
+        centerX = e.pageX - this.offsetLeft;
+        centerY = e.pageY - this.offsetTop;
+        console.log(centerX, centerY);
+        mclick = 2;
+      }
+      else {
+        radius = Math.sqrt(Math.pow(e.pageX - this.offsetLeft - centerX, 2)+Math.pow(e.pageY - this.offsetTop - centerY, 2));
+        console.log(radius);
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        ctx.stroke();
+        mclick = 1;
+      }
+    });
+  });
 };
