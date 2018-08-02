@@ -1,3 +1,21 @@
-#paint {
+body {
+
+}
+
+.canvas {
+  margin: 0 auto;
   border: black 2px solid;
+  width: 1600px;
+  height: 800px;
+}
+
+.tools-bar {
+  border: black 2px solid;
+  margin: 0 auto;
+  width: 1200px;
+  height: 54px;
+}
+
+.wrap {
+
 }

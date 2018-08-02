@@ -1,70 +1,74 @@
 window.onload=function(){
-  var canvas, ctx, flag = false,
-  prevX = 0,
-  currX = 0,
-  prevY = 0,
-  currY = 0,
-  dot_flag = false;
+  var canvas = $("#painto");
+  var ctx = document.getElementById('painto').getContext("2d");
 
-  var x = "black",
-  y = 2;
+  ctx.lineWidth = 2;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = 'black'
 
-  canvas = document.getElementById('paint');
-  ctx = canvas.getContext("2d");
-  w = canvas.width;
-  h = canvas.height;
+  /** pencil function **/
 
-  canvas.addEventListener("mousemove", function (e) {
-    findxy('move', e)
-  }, false);
-  canvas.addEventListener("mousedown", function (e) {
-    findxy('down', e)
-  }, false);
-  canvas.addEventListener("mouseup", function (e) {
-    findxy('up', e)
-  }, false);
-  canvas.addEventListener("mouseout", function (e) {
-    findxy('out', e)
-  }, false);
+  $("#pencil").on('click', function(){
+    canvas.off();
+    canvas.on('mousedown', function(e) {
+      ctx.beginPath();
+      ctx.moveTo(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+      canvas.on('mousemove', onPaint)
+      canvas.on('mouseup', function() {
+        canvas.off('mousemove', onPaint)
+      });
+      canvas.on('mouseleave', function() {
+        canvas.off('mousemove', onPaint)
+      });
+    });
+    var onPaint = function(e) {
+      ctx.lineTo(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+      ctx.stroke();
+    };
+  });
 
-  function draw() {
-    ctx.beginPath();
-    ctx.moveTo(prevX, prevY);
-    ctx.lineTo(currX, currY);
-    ctx.strokeStyle = x;
-    ctx.lineWidth = y;
-    ctx.stroke();
-    ctx.closePath();
-  }
-
-  function findxy(res, e) {
-    if (res == 'down') {
-      prevX = currX;
-      prevY = currY;
-      currX = e.clientX - canvas.offsetLeft;
-      currY = e.clientY - canvas.offsetTop;
-
-      flag = true;
-      dot_flag = true;
-      if (dot_flag) {
+  $("#line").on('click', function(){
+    canvas.off();
+    var mclick = 1;
+    canvas.on('click', function(e){
+      if (mclick === 1){
         ctx.beginPath();
-        ctx.fillStyle = x;
-        ctx.fillRect(currX, currY, 2, 2);
-        ctx.closePath();
-        dot_flag = false;
+        ctx.moveTo(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+        mclick = 2;
       }
-    }
-    if (res == 'up' || res == "out") {
-      flag = false;
-    }
-    if (res == 'move') {
-      if (flag) {
-        prevX = currX;
-        prevY = currY;
-        currX = e.clientX - canvas.offsetLeft;
-        currY = e.clientY - canvas.offsetTop;
-        draw();
+      else {
+        ctx.lineTo(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+        ctx.stroke();
+        mclick = 1;
       }
-    }
-  }
+    });
+  });
+
+  $("#rectangle").on('click', function(){
+    canvas.off();
+    var mclick = 1;
+    var topLeftX;
+    var topLeftY;
+    var bottomRightX;
+    var bottomRightY;
+    canvas.on('click', function(e){
+      if (mclick === 1){
+        ctx.beginPath();
+        topLeftX = e.pageX - this.offsetLeft
+        topLeftY = e.pageY - this.offsetTop
+        console.log(topLeftX, topLeftY);
+        mclick = 2;
+      }
+      else {
+        bottomRightX = e.pageX - this.offsetLeft - topLeftX;
+        bottomRightY = e.pageY - this.offsetTop - topLeftY;
+        console.log(topLeftX, topLeftY, bottomRightX, bottomRightY);
+        ctx.rect(topLeftX, topLeftY, bottomRightX, bottomRightY);
+        ctx.stroke();
+        mclick = 1;
+      }
+    });
+  });
+
 };
