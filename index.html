@@ -10,10 +10,21 @@
 <body>
   <div class="wrap">
     <div class="tools-bar">
-      <button class="tool" id="pencil">pencil</button>
-      <button class="tool" id="line">line</button>
-      <button class="tool" id="rectangle">rectangle</button>
-      <button class="tool" id="circle">circle</button>
+      <div class="tools-bar-top">
+        <button class="tool" id="pencil">pencil</button>
+        <button class="tool" id="line">line</button>
+        <button class="tool" id="rectangle">rectangle</button>
+        <button class="tool" id="rectangle-fill">full rectangle</button>
+        <button class="tool" id="circle">circle</button>
+        <button class="tool" id="circle-fill">full circle</button>
+        <button class="tool" id="clear">clear</button>
+      </div>
+      <div class="tools-bar-bottom">
+          <input class="mode" type="radio" name="drawing-mode" value="draw" checked />Drawing mode
+          <input class="mode" type="radio" name="drawing-mode" value="erase" />Eraser mode
+          <span>brush size :</span><input type="number" id="brush-size" value="2">
+          <input type="color" id="brush-color" name="color" value="#000000" />
+      </div>
     </div>
     <div class="canvas">
       <canvas id="painto" width="1600"  height="800"></canvas>

@@ -19,3 +19,7 @@ body {
 .wrap {
 
 }
+
+#brush-size {
+  width: 35px;
+}
