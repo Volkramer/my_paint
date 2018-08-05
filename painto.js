@@ -123,7 +123,6 @@ window.onload=function(){
         ctx.beginPath();
         centerX = e.pageX - this.offsetLeft;
         centerY = e.pageY - this.offsetTop;
-        console.log(centerX, centerY);
         mclick = 2;
       }
       else {
@@ -149,7 +148,6 @@ window.onload=function(){
         ctx.beginPath();
         centerX = e.pageX - this.offsetLeft;
         centerY = e.pageY - this.offsetTop;
-        console.log(centerX, centerY);
         mclick = 2;
       }
       else {
@@ -173,7 +171,16 @@ window.onload=function(){
     }
   }
 
+  /** Clear function **/
+
   $("#clear").on('click', function(){
     ctx.clearRect(0, 0, canvas.width(), canvas.height());
+  });
+
+  /** Save function **/
+
+  $("#save").on('click', function(){
+    var image = canvas[0].toDataURL("image/png").replace("image/png", "image/octet-stream");
+    window.location.href=image;
   });
 };
